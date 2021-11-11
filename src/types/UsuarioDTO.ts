@@ -7,8 +7,6 @@ export type UsuarioDTO = {
 }
 export const ColumnsUsuarioDTO = (): Column[] => {
     var _columnsUsuarioDTO: Column[];
-     
-    _columnsUsuarioDTO.push({ id: "id", label: "ID", },{ id: "nome", label: "Nome", },{ id: "email", label: "Email", })
-
-    return _columnsUsuarioDTO
+    _columnsUsuarioDTO = [{ id: "id", label: "ID", }, { id: "nome", label: "Nome", }, { id: "email", label: "Email", }];
+    return _columnsUsuarioDTO;
 }

@@ -1,6 +1,8 @@
-import { Paper, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TablePagination, TableRow } from '@material-ui/core';
+import { Paper, Table, TableBody, TableCell, tableCellClasses, 
+  TableContainer, TableHead, TablePagination, TableRow } from '@material-ui/core';
 import { styled } from '@material-ui/system';
 import { ReactNode, useState } from 'react';
+import Pagination from '../Pagination';
 /**
  * 
  */
@@ -25,20 +27,25 @@ export type Column = {
  */
 type TableProps = {
   columns: Column[];
-  rows: any[]
+  rows: any[], 
+  pageCount:number,  
+  outPage:(newPage)=>void, 
 }
 
-function TableDef({ columns, rows }: TableProps) {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+function TableDef({ columns, rows ,outPage,pageCount}: TableProps) {  
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
+    console.log(newPage);
+    
+    outPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
+ 
+    //rowsPerPage=+event.target.value;
+    console.log(+event.target.value);
+    
+    outPage(+event.target.value);
   };
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -60,8 +67,8 @@ function TableDef({ columns, rows }: TableProps) {
     },
   }));
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 440 }}  >
+    <>
+      <TableContainer sx={{ maxHeight: 440 }}    component={Paper}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -78,7 +85,7 @@ function TableDef({ columns, rows }: TableProps) {
           </TableHead>
           <TableBody>
             {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              
               .map((row) => {
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
@@ -98,16 +105,8 @@ function TableDef({ columns, rows }: TableProps) {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
+      <Pagination pageCount={pageCount} range={3} onChange={outPage} />
+    </>
   );
             }
 

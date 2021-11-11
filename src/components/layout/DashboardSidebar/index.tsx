@@ -14,6 +14,7 @@ import {
 import {
   AlertCircle as AlertCircleIcon,
   BarChart as BarChartIcon,
+  Truck as TruckIcon,
   Lock as LockIcon,
   Settings as SettingsIcon,
   ShoppingBag as ShoppingBagIcon,
@@ -37,14 +38,14 @@ const user = {
 
 const items = [
   {
-    href: '/app/dashboard',
-    icon: BarChartIcon,
-    title: 'Dashboard'
+    href: '/app/usuarios',
+    icon: UsersIcon,
+    title: 'Usuários'
   },
   {
-    href: '/app/customers',
-    icon: UsersIcon,
-    title: 'Customers'
+    href: '/app/veiculos',
+    icon: TruckIcon,
+    title: 'Veiculos'
   },
   {
     href: '/app/products',
@@ -83,15 +84,15 @@ function DashboardSidebar({ onMobileClose, openMobile }: DashboardSidebarProps) 
   const [usuario, setusuario] = useState({});
   useEffect(() => {
     //verifica a existência e validade do token e redireciona para login
-    if(!isAuthenticated()){
+    if (!isAuthenticated()) {
       navigate('/auth/login', { replace: true });
       return;
     }
     setusuario(getAuthData().usuario);
-    user.name=getAuthData().usuario.nome;
-    user.jobTitle=getAuthData().usuario.email;
+    user.name = getAuthData().usuario.nome;
+    user.jobTitle = getAuthData().usuario.email;
     console.log(usuario);
-    
+
     if (openMobile && onMobileClose) {
       onMobileClose();
     }

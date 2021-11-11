@@ -23,6 +23,7 @@ export const isAuthenticated = (): boolean => {
 };
 
 export const hasAnyRoles = (roles: Role[]): boolean => {
+
   if (roles.length === 0) {
     return true;
   }
@@ -31,7 +32,7 @@ export const hasAnyRoles = (roles: Role[]): boolean => {
 
   if (tokenData !== undefined) {
     for (var i = 0; i < roles.length; i++) {
-      if (tokenData.authorities.includes(roles[i])) {
+      if (getAuthData().usuario.perfil.includes(roles[i])) {
         return true;
       }
     }

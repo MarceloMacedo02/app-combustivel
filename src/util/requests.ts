@@ -31,12 +31,16 @@ export const requestBackendLogin = (loginData: LoginData) => {
 };
 
 export const requestBackend = (config: AxiosRequestConfig) => {
-  const headers = config.withCredentials
-    ? {
+  config = {
+    ...config, 
+  }
+
+  const headers =   {
         ...config.headers,
         Authorization:  getAuthData().token,
-      }
-    : config.headers;
+      };
+     
+console.log(headers);
 
   return axios({ ...config, baseURL: BASE_URL, headers });
 };
