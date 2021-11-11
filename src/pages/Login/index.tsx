@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import {
+  Alert,
   Box,
   Button,
   Container,
@@ -11,12 +12,21 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
-import FacebookIcon from './../../icons/Facebook';
-import GoogleIcon from './../../icons/Google';
- 
+import { useState ,useContext, useEffect} from 'react';
+import { requestBackendLogin } from '../../util/requests';
+import { removeAuthData, saveAuthData } from '../../util/storage';
+import { getTokenData } from '../../util/auth';
+import { AuthContext } from '../../AuthContext'; 
+
 
 function Login() {
+  const { setAuthContextData } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    removeAuthData();   
+  }, [])
 
   return (
     <>
@@ -32,7 +42,9 @@ function Login() {
           justifyContent: 'center'
         }}
       >
-        <Container maxWidth="sm" style={{marginTop:'20px' ,padding:'5px',textAlign:'center'}}>
+        <Container maxWidth="sm" style={{ marginTop: '20px', padding: '5px', textAlign: 'center' }}>
+
+
           <Formik
             initialValues={{
               email: '',
@@ -42,8 +54,24 @@ function Login() {
               email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
               password: Yup.string().max(255).required('Password is required')
             })}
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
+            onSubmit={(values) => {
+              console.log(values);
+              
+              requestBackendLogin(values)
+              .then((response) => {
+                saveAuthData(response.data);
+                setHasError(false);
+                setAuthContextData({
+                  authenticated: true,
+                  tokenData: getTokenData(),
+                })
+                navigate('/app', { replace: true });
+              })
+              .catch((error) => {
+                setHasError(true);
+                console.log('ERRO', error);
+              });
+           
             }}
           >
             {({
@@ -61,7 +89,7 @@ function Login() {
                     color="textPrimary"
                     variant="h2"
                   >
-                    Acesso 
+                    Acesso
                   </Typography>
                   <Typography
                     color="textSecondary"
@@ -70,7 +98,11 @@ function Login() {
                   >
                     Faça login na plataforma interna
                   </Typography>
+
                 </Box>
+                {hasError && (
+                  <Alert severity="error">Erro ao tentar efetuar o login</Alert>
+                )}
                 <Grid
                   container
                   spacing={3}
@@ -80,14 +112,14 @@ function Login() {
                     xs={12}
                     md={6}
                   >
-                  
+
                   </Grid>
                   <Grid
                     item
                     xs={12}
                     md={6}
                   >
-                     
+
                   </Grid>
                 </Grid>
                 <Box
@@ -96,7 +128,7 @@ function Login() {
                     pt: 3
                   }}
                 >
-                   
+
                 </Box>
                 <TextField
                   error={Boolean(touched.email && errors.email)}
@@ -126,8 +158,7 @@ function Login() {
                 />
                 <Box sx={{ py: 2 }}>
                   <Button
-                    color="primary"
-                    disabled={isSubmitting}
+                    color="primary" 
                     fullWidth
                     size="large"
                     type="submit"
@@ -136,7 +167,7 @@ function Login() {
                     Entrar
                   </Button>
                 </Box>
-                
+
               </form>
             )}
           </Formik>

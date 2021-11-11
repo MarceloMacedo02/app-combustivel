@@ -1,26 +1,21 @@
-import { getTokenData } from "./token_token";
+import jwtDecode from 'jwt-decode';
+import { getAuthData } from './storage';
 
+export type Role = 'AMINISTRADOR' | 'SUPER_ADMINISTRADOR';
 
-export type Role = 'ROLE_OPERATOR' | 'ROLE_ADMIN' | "ROLE_ADMINTEC" | "ROLE_ADMINFINANCEIRO" | "ROLE_ADMINESTOQUE";
-export const roles = ['ROLE_OPERATOR', 'ROLE_ADMIN', "ROLE_ADMINTEC", "ROLE_ADMINFINANCEIRO", "ROLE_ADMINESTOQUE"];
+export type TokenData = {
+  exp: number;
+  user_name: string;
+  authorities: Role[];
+};
 
-/**
- * verificar se tem acesso a tela
- */
- export const isFinantialAdmin=():boolean=>{  
-  return hasAnyRoles(["ROLE_ADMINFINANCEIRO",'ROLE_ADMIN']) ;
-}
-export const isTecnalAdmin=():boolean=>{  
-  console.log('istec' +  hasAnyRoles(["ROLE_ADMINTEC",'ROLE_ADMIN']));
-  
-  return hasAnyRoles(["ROLE_ADMINTEC",'ROLE_ADMIN']) ;
-}
-export const isStokAdmin=():boolean=>{  
-  return hasAnyRoles(["ROLE_ADMINESTOQUE",'ROLE_ADMIN']) ;
-}
-export const isAdmin=():boolean=>{  
-  return hasAnyRoles(['ROLE_ADMIN']) ;
-}
+export const getTokenData = (): TokenData | undefined => {
+  try {
+    return jwtDecode(getAuthData().token) as TokenData;
+  } catch (error) {
+    return undefined;
+  }
+};
 
 export const isAuthenticated = (): boolean => {
   let tokenData = getTokenData();
@@ -45,18 +40,3 @@ export const hasAnyRoles = (roles: Role[]): boolean => {
 
   return false;
 };
-
-
-export const hasAutorizationRole = (roleLevelAccess: string[]): boolean => {
-  let out = true;
-  if (!Array.isArray(roleLevelAccess))    return false;
-  for (var i = 0; i < roleLevelAccess.length; i++) {
-    let el1 = roleLevelAccess[i].toLowerCase();
-    var pos = roles.indexOf(el1.toUpperCase());
-    if (pos === -1) {
-      out = false;
-    }
-
-  }
-  return out;
-}

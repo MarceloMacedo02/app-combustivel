@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   Avatar,
@@ -20,11 +20,13 @@ import {
   User as UserIcon,
   UserPlus as UserPlusIcon,
   Users as UsersIcon
-} from 'react-feather'; 
+} from 'react-feather';
 import NavItem from '../../NavItem';
+import { getAuthData } from '../../../util/storage';
+import { isAuthenticated } from '../../../util/auth';
 interface DashboardSidebarProps {
-  onMobileClose:()=>void
-  openMobile:boolean
+  onMobileClose: () => void
+  openMobile: boolean
 }
 
 const user = {
@@ -60,9 +62,9 @@ const items = [
     title: 'Settings'
   },
   {
-    href: '/login',
+    href: '/auth/login',
     icon: LockIcon,
-    title: 'Login'
+    title: 'Sair'
   },
   {
     href: '/register',
@@ -75,10 +77,21 @@ const items = [
     title: 'Error'
   }
 ];
-function DashboardSidebar({ onMobileClose,openMobile }: DashboardSidebarProps) {
+function DashboardSidebar({ onMobileClose, openMobile }: DashboardSidebarProps) {
   const location = useLocation();
-
+  const navigate = useNavigate();
+  const [usuario, setusuario] = useState({});
   useEffect(() => {
+    //verifica a existência e validade do token e redireciona para login
+    if(!isAuthenticated()){
+      navigate('/auth/login', { replace: true });
+      return;
+    }
+    setusuario(getAuthData().usuario);
+    user.name=getAuthData().usuario.nome;
+    user.jobTitle=getAuthData().usuario.email;
+    console.log(usuario);
+    
     if (openMobile && onMobileClose) {
       onMobileClose();
     }

@@ -1,13 +1,11 @@
+import { Usuario } from "../types/Usuario";
+
 const tokenKey = 'authData';
 
 type LoginResponse = {
-  access_token: string;
-  token_type: string;
-  expires_in: number;
-  scope: string;
-  url:string;
-  userFirstName: string;
-  userId: number;
+  
+  token:string;
+  usuario?:Usuario;
 };
 
 export const saveAuthData = (obj: LoginResponse) => {

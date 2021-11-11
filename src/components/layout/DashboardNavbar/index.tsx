@@ -1,6 +1,6 @@
  
 import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   AppBar,
@@ -13,14 +13,19 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
+import { removeAuthData } from '../../../util/storage';
  
 interface DashboardNavbarProps {
   onMobileNavOpen:()=>void;
 }
 
-function DashboardNavbar({ onMobileNavOpen }: DashboardNavbarProps) {
+function DashboardNavbar({ onMobileNavOpen }: DashboardNavbarProps) { 
+  const navigate = useNavigate();
   const [notifications,setnotifications] = useState([]);
-
+  const removeAuth=()=>{
+    removeAuthData();
+    navigate('/auth/login', { replace: true });
+  }
   return (
    <>
     <AppBar
@@ -43,9 +48,11 @@ function DashboardNavbar({ onMobileNavOpen }: DashboardNavbarProps) {
             </Badge>
           </IconButton>
           <IconButton color="inherit">
-            <InputIcon />
+            <InputIcon  onClick={removeAuth}/>
+             
           </IconButton>
         </Hidden>
+
         <Hidden lgUp>
           <IconButton
             color="inherit"

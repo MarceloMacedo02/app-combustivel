@@ -6,6 +6,16 @@ import DashboardLayout from './components/DashboardLayout';
 import Login from './pages/Login';
 
 function App() { 
+  const root = {
+    
+    path: '/',
+    element: <DashboardLayout />,
+    children: [
+      
+      {path: 'account', element: <Account />},
+      
+    ],
+  };
   const mainRoutes = {
     
     path: '/app',
@@ -20,19 +30,8 @@ const auth={
   path: '/auth/login',
   element: <Login />
   
-}
- /* const accountRoutes = {
-    path: 'account',
-    element: <AccountLayout />,
-    children: [
-      {path: '*', element: <Navigate to='/404' />},
-      {path: ':id', element: <AccountDetailView />},
-      {path: 'add', element: <AccountAddView />},
-      {path: 'list', element: <AccountListView />},
-    ],
-  };
-*/
-  const routing = useRoutes([mainRoutes,auth]);
+} 
+  const routing = useRoutes([mainRoutes,auth,root]);
 
   return <>{routing}</>;
  
