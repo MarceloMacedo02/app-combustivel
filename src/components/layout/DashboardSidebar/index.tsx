@@ -45,7 +45,7 @@ const items = [
   {
     href: '/app/veiculos',
     icon: TruckIcon,
-    title: 'Veiculos'
+    title: 'Veículos'
   },
   {
     href: '/app/products',

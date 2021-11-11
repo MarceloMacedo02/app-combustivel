@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import {
   Search as SearchIcon,
   Edit3 as EditIcon,
- UserPlus as UserplusIcon 
+ PlusCircle as UserplusIcon 
  
 } from 'react-feather'; 
 interface TextFindProps {
@@ -55,7 +55,7 @@ function TextFind({ onFilterName,addVisible,onSetPage }: TextFindProps) {
       />
        
       {addVisible &&  <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />}
-      {addVisible &&   <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions" title="Adicionar Usuário">
+      {addVisible &&   <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions" title="Adicionar">
         <UserplusIcon />
       </IconButton>
       }

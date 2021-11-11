@@ -1,6 +1,7 @@
 import { SampleIdDTO } from "./SampleDTO";
 import { Setor } from "./Setor";
 import { TipoCombustivel } from "./TipoCombustivel";
+import { UsuarioDTO } from "./UsuarioDTO";
 
 export type Veiculo = {
     id?: number;
@@ -19,7 +20,7 @@ export type Veiculo = {
     alugado?: boolean;
     tanque?: number;
     consumoMedio?: number;
-    responsavel?: SampleIdDTO;//usuario
+    responsavel?: UsuarioDTO;//usuario
     conservacao?: string;
     ano?: string;
     setor?: Setor;
