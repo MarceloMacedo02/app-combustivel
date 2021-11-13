@@ -10,6 +10,7 @@ import { SpringPage } from '../../../types/vendor/spring';
 import { hasAnyRoles } from '../../../util/auth';
 import { requestBackend } from '../../../util/requests';
 import {   Edit3 as EditIcon, } from 'react-feather'; 
+import { useNavigate } from 'react-router';
 function ListVeiculos( ) {
   const [name, setName] = useState('');
   const [page, setPage] = useState<SpringPage<VeiculoDTO>>();
@@ -18,6 +19,8 @@ function ListVeiculos( ) {
   const [status, setstatus] = useState<boolean>(true);
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const controller = 'veiculos';
+  const navigate = useNavigate();
+
 
   const onFilter = () => {
   
@@ -36,7 +39,7 @@ function ListVeiculos( ) {
         data=rest.data;
         if(status){
            data.content.forEach(element => {
-             element.edit=<a> <EditIcon size='15' /></a>             
+             element.edit=<a onClick={()=>{navigate(`/app/newveiculo`, { replace: true });}} > <EditIcon size='15' /></a>             
            });  
         }
         setPage(data);
@@ -65,7 +68,8 @@ function ListVeiculos( ) {
     <>
       <Card sx={{ m: 1, mt: 2 ,minHeight:600}}>
         <CardContent>
-          <TextFind onFilterName={setName} addVisible={status} onSetPage={()=>setNumberPage(0)} />
+          <TextFind onFilterName={setName} addVisible={status} onSetPage={()=>setNumberPage(0)} 
+          onClicknew={()=>{navigate(`/app/newveiculo`, { replace: true });}} />
           <hr/>
           <h5>Lista de Veículos</h5>
           <TableDef columns={columns} rows={page != null ? page.content : []}

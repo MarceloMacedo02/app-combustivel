@@ -12,46 +12,55 @@ import { requestBackend } from './util/requests';
 import { getTokenData, isAuthenticated } from './util/auth';
 import ListVeiculos from './pages/Veiculo/ListVeiculos';
 import EditVeiculo from './pages/Veiculo/EditVeiculo';
+import StapVeiculo from './pages/Veiculo/StapVeiculo';
+import EditFipe from './pages/Veiculo/EditFipe';
 
 function App() {
   var time: any;
   const navigate = useNavigate();
+ /* const sinespApi = require('sinesp-api');
+  let vehicle = sinespApi.search('PGG1537');
+  console.log(vehicle);
+*/
 
-  
   const onFilter = () => {
     var token = getAuthData().token;
     const params: AxiosRequestConfig = {
-     
+
       method: 'POST',
-      url: `/refresh/${token}`,
-      
+      url: `/api/refresh/${token}`,
+
     };
     requestBackend(params).then(
       (response) => {
+        removeAuthData();
         saveAuthData(response.data);
-        
-        setAuthContextData({
-          authenticated: true,
-          tokenData: getTokenData(),
-        })
+
+      }
+
+    ).catch(
+      (error) => {
+        console.log(error);
+
       }
     );
   }
-  const removeAuth=()=>{
+  const removeAuth = () => {
     removeAuthData();
     navigate('/auth/login', { replace: true });
   }
   time = setInterval(() => {
     try {
-      if( isAuthenticated()){
+     
+      if (isAuthenticated()) {
         onFilter();
-      } else{
+      } else {
         removeAuth();
-        clearInterval(time);
+        //     clearInterval(time);
       }
     } catch (error) {
       removeAuth();
-      clearInterval(time);
+      //  clearInterval(time);
     }
   }, 19980);
 
@@ -72,6 +81,7 @@ function App() {
       { path: 'usuarios', element: <ListUser /> },
       { path: 'account', element: <Account /> },
       { path: 'veiculos', element: <ListVeiculos /> },
+      { path: 'newveiculo', element: <StapVeiculo  /> },
       { path: 'veiculos/:id', element: <EditVeiculo /> },
 
 
@@ -89,7 +99,4 @@ function App() {
 }
 
 export default App;
-function setAuthContextData(arg0: { authenticated: boolean; tokenData: any; }) {
-  throw new Error('Function not implemented.');
-}
-
+ 

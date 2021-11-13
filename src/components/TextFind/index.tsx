@@ -14,9 +14,10 @@ interface TextFindProps {
   onFilterName: (nome: string) => void;
   addVisible:boolean ;
   onSetPage?:( )=>void;
+  onClicknew?:()=>void;
 }
 
-function TextFind({ onFilterName,addVisible,onSetPage }: TextFindProps) {
+function TextFind({ onFilterName,addVisible,onSetPage,onClicknew }: TextFindProps) {
 
   const [userQuery, setUserQuery] = useState("");
   const updateQuery = () => {
@@ -55,7 +56,7 @@ function TextFind({ onFilterName,addVisible,onSetPage }: TextFindProps) {
       />
        
       {addVisible &&  <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />}
-      {addVisible &&   <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions" title="Adicionar">
+      {addVisible &&   <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions" title="Adicionar" onClick={onClicknew}>
         <UserplusIcon />
       </IconButton>
       }

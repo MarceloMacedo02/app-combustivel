@@ -29,6 +29,17 @@ export const requestBackendLogin = (loginData: LoginData) => {
      data:loginData
   });
 };
+export const requestExtern= (config: AxiosRequestConfig) => {
+  config = {
+    ...config, 
+  }
+
+  const headers =   {
+        ...config.headers, 
+      }; 
+
+  return axios({ ...config, baseURL: BASE_URL, headers });
+};
 
 export const requestBackend = (config: AxiosRequestConfig) => {
   config = {
