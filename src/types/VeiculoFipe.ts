@@ -2,16 +2,17 @@ export type VeiculoFipe =
     {
         valor?: string;
         marca?: string;
-        codigomarca?:string;
+       
         modelo?: string;
-        codigomodelo?:string;
         anoModelo?: string;
-        codigoano?:string;
         combustivel?: string;
         codigoFipe?: string;
         mesReferencia?: string;
         tipoVeiculo?: string;
-        siglaCombustivel?: string;
+        siglaCombustivel?: string;       
+        codigoano?:string;
+        codigomodelo?:string;
+        codigomarca?:string;
 
     }
     export const clearVeiculoFip=()=>{

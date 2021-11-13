@@ -180,7 +180,8 @@ function EditFipe({ outVeiculoFipe, veiculoFipeuser }: EditFipeProps) {
             fipe.mesReferencia = response.data.MesReferencia;
             fipe.modelo = response.data.Modelo;
             fipe.siglaCombustivel = response.data.SiglaCombustivel;
-            fipe.tipoVeiculo = response.data.TipoVeiculo;
+            fipe.tipoVeiculo = tipoVeiculo;
+            fipe.codigotipoVeiculo = response.data.TipoVeiculo;
             fipe.valor = response.data.Valor;
             console.log(fipe);
 
@@ -202,7 +203,7 @@ function EditFipe({ outVeiculoFipe, veiculoFipeuser }: EditFipeProps) {
       <Container maxWidth="lg">
         <Card>
           <CardContent>
-            <CardHeader title='Dados Veiculos Gerais' />
+            <CardHeader title='Identificação do Veículo' />
             <Autocomplete
               disablePortal
               id="combo-box-demo"

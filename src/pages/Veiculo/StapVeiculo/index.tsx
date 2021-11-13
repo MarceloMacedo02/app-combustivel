@@ -9,6 +9,7 @@ import { Veiculo, veiculoBlank } from '../../../types/Veiculo';
 import { VeiculoDTO } from '../../../types/VeiculoDTO';
 import { VeiculoFipe } from '../../../types/VeiculoFipe';
 import EditFipe from '../EditFipe';
+import RegistroVeiculo from '../RegistroVeiculo';
 
 interface StapVeiculoProps {
   children?: ReactNode; 
@@ -34,6 +35,7 @@ function StapVeiculo({ children }: StapVeiculoProps) {
 
 const setveiculoFipeIn=(_veiculoFipe:VeiculoFipe)=>{
   
+  setValue('veiculoFipe',_veiculoFipe)
  setveiculo({...veiculo,veiculoFipe:_veiculoFipe});
 
 }
@@ -119,6 +121,7 @@ const onSubmit=(formdata)=>{
           ) : (
             <Fragment>
               {(activeStep == 0) && <EditFipe veiculoFipeuser={veiculo.veiculoFipe?veiculo.veiculoFipe:null} outVeiculoFipe={setveiculoFipeIn} />}
+              {(activeStep == 1) && <RegistroVeiculo setveiculo={setveiculo} setValue={setValue} errors={errors} veiculo={veiculo} register={register}  />}
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                   color="inherit"

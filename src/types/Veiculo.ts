@@ -15,7 +15,7 @@ export type Veiculo = {
     observacao?: string;
     rota?: string;
     tombamento?: string;
-    aquisicao?: string;
+    aquisicao?: Date;
     maquinario?: boolean;
     ativo?: boolean;
     alugado?: boolean;
@@ -45,7 +45,7 @@ export function veiculoBlank(): Veiculo {
         observacao: '',
         rota: '',
         tombamento: '',
-        aquisicao: '',
+        aquisicao: new Date(),
         maquinario: false,
         ativo: false,
         alugado: false,
