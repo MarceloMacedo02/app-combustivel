@@ -78,7 +78,7 @@ function StatusVeiculo({ register, errors, setValue, veiculo, setveiculo, getVal
               <SelectComponent defaultFieldValue={veiculo.setor ? veiculo.setor.id : null}
                 option={setores && setores.map(
                   x => ({ value: x.id, title: x.nome }))}
-                dataField={'setor'} titleField={"Setor"} register={register}
+                dataField={'setor.id'} titleField={"Setor"} register={register}
                 errors={errors.setor} getValues={getValues} setValue={setValue} />
 
             </Grid>
@@ -86,11 +86,18 @@ function StatusVeiculo({ register, errors, setValue, veiculo, setveiculo, getVal
               <SelectComponent defaultFieldValue={veiculo.responsavel ? veiculo.responsavel.id : null}
                 option={usuarios && usuarios.map(
                   x => ({ value: x.id, title: x.nome }))}
-                dataField={'responsavel'} titleField={"Responsável"} register={register}
+                dataField={'responsavel.id'} titleField={"Responsável"} register={register}
                 errors={errors.setor} getValues={getValues} setValue={setValue} />
 
             </Grid>
+            <Grid item lg={4}>
+              <SelectComponent defaultFieldValue={veiculo.alugado ? veiculo.alugado : null}              
+              option={[{ value: 'Sim', title: "Sim" }, { value: "Não", title: 'Não' }]}
+                dataField={'alugado'} titleField={"Alugado"} register={register}
+                errors={errors.alugado} getValues={getValues} setValue={setValue} />
 
+            </Grid>
+                 
             <Grid item lg={4}>
 
               <SelectComponent defaultFieldValue={veiculo.conservacao ? veiculo.conservacao : null} 

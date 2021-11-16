@@ -41,7 +41,8 @@ function NewVeiculo({ }: NewVeiculoProps) {
     url: getRequest,
   };
   useEffect(() => {
-    setValue('ativo', 'Sim')
+    
+
     if (param.id !== 'add') {
       const params: AxiosRequestConfig = {
         method: 'GET',
@@ -66,7 +67,7 @@ function NewVeiculo({ }: NewVeiculoProps) {
 
 
   }, [param])
-  
+
   const setpara = () => {
     setparam({ ...param, id: 4 });
     navigate(`/app/veiculos/${param.id}`, { replace: true });
@@ -92,8 +93,11 @@ function NewVeiculo({ }: NewVeiculoProps) {
     };
     requestBackend(params).then(
       (response) => {
-        setveiculo(response.data);
-        navigate(`/app/veiculos/${veiculo.id}`, { replace: true });
+      //  setveiculo(response.data);
+      param.id = response.data;
+      setveiculo({...veiculo,id:response.data});
+        navigate(`/app/veiculos/${response.data}`, { replace: true });
+
       }
 
     ).catch(
@@ -106,6 +110,7 @@ function NewVeiculo({ }: NewVeiculoProps) {
 
 
   const setveiculoFipeIn = (_veiculoFipe: VeiculoFipe) => {
+console.log(_veiculoFipe);
 
     setValue('veiculoFipe', _veiculoFipe)
     setveiculo({ ...veiculo, veiculoFipe: _veiculoFipe });
@@ -137,7 +142,7 @@ function NewVeiculo({ }: NewVeiculoProps) {
 
           <Container>
  
-            <EditFipe veiculoFipeuser={veiculo.veiculoFipe ? veiculo.veiculoFipe : null}
+            <EditFipe veiculoFipeuser={veiculo.veiculoFipe ? veiculo.veiculoFipe : null} getValues={getValues} 
               outVeiculoFipe={setveiculoFipeIn} register={register} errors={errors} setValue={setValue} veiculo={veiculo}
               setveiculo={setveiculo} />
             <RegistroVeiculo setveiculo={setveiculo} getValues={getValues}

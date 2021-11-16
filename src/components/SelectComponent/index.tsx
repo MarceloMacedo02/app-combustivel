@@ -1,4 +1,5 @@
 import { Select, Radio } from 'antd';
+import './index.css';
 import { useEffect, useState } from 'react';
 const { Option } = Select;
 interface SelectComponentProps {
@@ -18,7 +19,10 @@ function SelectComponent({ dataField, defaultFieldValue, titleField, register, e
   const [state, setstate] = useState<string>()
   
   useEffect(() => {
-  if(defaultFieldValue)  setstate(defaultFieldValue);
+  if(defaultFieldValue) {
+    setValue( dataField , defaultFieldValue);
+   setstate(defaultFieldValue);
+  }
   }, [defaultFieldValue])
 
   const setvalue = (value) => {
@@ -30,8 +34,9 @@ function SelectComponent({ dataField, defaultFieldValue, titleField, register, e
 
       <div className=" form-group">
         <label className="form-label mt-2"> {titleField}</label>
-        <Select size={'middle'} value={state}   style={{'minWidth':250}}
-          className={`form-control base-input ${errors ? 'is-invalid' : ''}`}
+        <br/>
+        <Select size={'middle'} value={state}   style={{'minWidth':250}} showSearch
+          className={` form-control-select base-input ${errors ? 'is-invalid' : ''}`}
         onChange={setvalue} placeholder={titleField}> 
           { option && option.map((option) => <Option value={option.value}>{option.title}</Option>)}
 

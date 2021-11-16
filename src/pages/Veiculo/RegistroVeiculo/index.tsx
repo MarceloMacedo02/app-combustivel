@@ -40,6 +40,11 @@ function RegistroVeiculo({ register, errors, setValue, veiculo, setveiculo, getV
                     register={register} setValue={setValue} errors={errors.chassi} />
                 </Grid>
                 <Grid item lg={4}>
+                  <FielTextHook fieldName={"renavan"} label={"Renavan"} defaultFieldValue={veiculo.renavan}
+                    register={register} setValue={setValue} errors={errors.renavan} />
+                </Grid>
+
+                <Grid item lg={4}>
                   <FielTextHook fieldName={"cor"} label={"Cor"} defaultFieldValue={veiculo.cor}
                     register={register} setValue={setValue} errors={errors.cor} />
                 </Grid>
@@ -60,15 +65,8 @@ function RegistroVeiculo({ register, errors, setValue, veiculo, setveiculo, getV
                   <FielTextHook fieldName={"consumoMedio"} label={"Consumo Medio"} defaultFieldValue={veiculo.consumoMedio}
                     type='number' register={register} setValue={setValue} errors={errors.consumoMedio} />
                 </Grid>
-                <Grid item lg={4}>
-                  <div className=" form-group">
-                    <label className="form-label mt-2"> Data Aquisição</label>
-                    <DatePicker defaultValue={moment((veiculo.aquisicao), dateFormat)} format={dateFormat}
-                   onChange={(e)=>{setValue('aquisicao',e.date)}}
-                    className={`form-control base-input   ${errors.aquisicao ? 'is-invalid' : ''}`}/>
-                  </div>
- 
-                </Grid>
+                 
+
               </Grid>
             </CardContent>
           </Card>

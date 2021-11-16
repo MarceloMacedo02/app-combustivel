@@ -43,40 +43,15 @@ const items = [
     title: 'Usuários'
   },
   {
-    href: '/app/veiculos',
-    icon: TruckIcon,
-    title: 'Veículos'
-  },
-  {
     href: '/app/setores',
     icon: ShoppingBagIcon,
     title: 'Setores'
   },
   {
-    href: '/app/account',
-    icon: UserIcon,
-    title: 'Account'
-  },
-  {
-    href: '/app/settings',
-    icon: SettingsIcon,
-    title: 'Settings'
-  },
-  {
-    href: '/auth/login',
-    icon: LockIcon,
-    title: 'Sair'
-  },
-  {
-    href: '/register',
-    icon: UserPlusIcon,
-    title: 'Register'
-  },
-  {
-    href: '/404',
-    icon: AlertCircleIcon,
-    title: 'Error'
-  }
+    href: '/app/veiculos',
+    icon: TruckIcon,
+    title: 'Veículos'
+  } 
 ];
 function DashboardSidebar({ onMobileClose, openMobile }: DashboardSidebarProps) {
   const location = useLocation();
@@ -165,13 +140,12 @@ function DashboardSidebar({ onMobileClose, openMobile }: DashboardSidebarProps) 
           gutterBottom
           variant="h4"
         >
-          Need more?
+          
         </Typography>
         <Typography
           align="center"
           variant="body2"
-        >
-          Upgrade to PRO version and access 20 more screens
+        > 
         </Typography>
         <Box
           sx={{
@@ -183,10 +157,9 @@ function DashboardSidebar({ onMobileClose, openMobile }: DashboardSidebarProps) 
           <Button
             color="primary"
             component="a"
-            href="https://react-material-kit.devias.io"
+            
             variant="contained"
-          >
-            See PRO version
+          > 
           </Button>
         </Box>
       </Box>
