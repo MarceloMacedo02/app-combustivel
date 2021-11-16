@@ -14,11 +14,11 @@ export type Veiculo = {
     renavan?: string;
     observacao?: string;
     rota?: string;
-    tombamento?: string;
+    tombamento?: string; 
     aquisicao?: Date;
-    maquinario?: boolean;
-    ativo?: boolean;
-    alugado?: boolean;
+    maquinario?: string;
+    ativo?: string;
+    alugado?: string;
     tanque?: number;
     consumoMedio?: number;
     responsavel?: UsuarioDTO;//usuario
@@ -46,26 +46,14 @@ export function veiculoBlank(): Veiculo {
         rota: '',
         tombamento: '',
         aquisicao: new Date(),
-        maquinario: false,
-        ativo: false,
-        alugado: false,
+        maquinario: 'Sim',
+        ativo: 'Sim',
+        alugado: 'Sim',
         tanque: 0,
-        consumoMedio: 0,
-        responsavel: {
-            id: 0,
-            nome: '',
-            email: ''
-        },
+        consumoMedio: 0, 
         conservacao: '',
         ano: '',
-        setor: {
-            id: 0,
-            nome: ''
-        },
-        tipoCombustivel: {
-            id: 0,
-            nome: ''
-        },
+         
         imei: '',
         chip: '',
         deviceId: 0,

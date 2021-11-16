@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode';
 import { getAuthData } from './storage';
 
-export type Role = 'AMINISTRADOR' | 'SUPER_ADMINISTRADOR';
+export type Role = 'ADMINISTRADOR' | 'SUPER_ADMINISTRADOR';
 
 export type TokenData = {
   exp: number;
@@ -11,7 +11,7 @@ export type TokenData = {
 
 export const getTokenData = (): TokenData | undefined => {
   try {
-    return jwtDecode(getAuthData().token) as TokenData;
+    return jwtDecode(getAuthData().access_token) as TokenData;
   } catch (error) {
     return undefined;
   }

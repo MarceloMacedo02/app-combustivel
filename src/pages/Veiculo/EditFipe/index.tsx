@@ -1,14 +1,15 @@
-import { Autocomplete, Card, CardContent, CardHeader, Container, TextField } from '@material-ui/core';
+import { Autocomplete, Card, CardContent, CardHeader, Container, FormLabel, TextField } from '@material-ui/core';
 import { Box } from '@material-ui/system';
 import { AxiosRequestConfig } from 'axios';
 import { ReactNode, useEffect, useState } from 'react';
 import { Anos, Marcas, Modelos, newElementoFipe, TipVeiculo } from '../../../types/Fipe';
 import { clearVeiculoFip, VeiculoFipe } from '../../../types/VeiculoFipe';
-import { requestExtern } from '../../../util/requests';
+import { requestBackendNonCredentials } from '../../../util/requests';
 
 interface EditFipeProps {
   outVeiculoFipe?: (veiculoFipe: VeiculoFipe) => void;
   veiculoFipeuser: VeiculoFipe;
+  register, errors, setValue, veiculo, setveiculo
 }
 type structure = {
   label: string;
@@ -17,7 +18,7 @@ type structure = {
 type ModelosEstructure = {
   modelos: Modelos[];
 }
-function EditFipe({ outVeiculoFipe, veiculoFipeuser }: EditFipeProps) {
+function EditFipe({ outVeiculoFipe, veiculoFipeuser, register, errors, setValue, veiculo, setveiculo }: EditFipeProps) {
   const [veiculoFipe, setveiculoFipe] = useState<VeiculoFipe>(null);
   const [tipoVeiculo, setTipoVeiculo] = useState('');
   const [marca, setmarca] = useState<structure>({ codigo: '', label: '' });
@@ -27,7 +28,6 @@ function EditFipe({ outVeiculoFipe, veiculoFipeuser }: EditFipeProps) {
   const [ano, setAno] = useState<structure>({ codigo: '', label: '' });
   const [anos, setAnos] = useState<structure[]>([]);
   const [request, setrequest] = useState('');
-
 
   /**
    * Array filters items based on search criteria (query)
@@ -43,22 +43,25 @@ function EditFipe({ outVeiculoFipe, veiculoFipeuser }: EditFipeProps) {
 
 
   useEffect(() => {
-    setveiculoFipe(null);
-    setmarca({ codigo: '', label: '' });
-    setAno({ codigo: '', label: '' });
-    setmodelos([]);
-    setmarcas([]);
+
+    console.log(veiculoFipeuser);
+
     if (veiculoFipeuser !== null) {
       setTipoVeiculo(veiculoFipeuser.tipoVeiculo);
       setmarca({ label: veiculoFipeuser.marca, codigo: veiculoFipeuser.codigomarca });
       setmodelo({ label: veiculoFipeuser.modelo, codigo: veiculoFipeuser.codigomodelo });
       setAno({ label: veiculoFipeuser.anoModelo, codigo: veiculoFipeuser.codigoano });
+    } else { 
+      setmarca({ codigo: '', label: '' });
+      setAno({ codigo: '', label: '' });
+      setmodelos([]);
+      setmarcas([]);
     }
     let params: AxiosRequestConfig = {
       method: 'GET',
       url: `https://parallelum.com.br/fipe/api/v1/${tipoVeiculo}/marcas`,
     };
-    if (tipoVeiculo.length > 0) requestExtern(params)
+    if (tipoVeiculo.length > 0) requestBackendNonCredentials(params)
       .then(
         (response) => {
           let marc: structure[] = [];
@@ -83,11 +86,12 @@ function EditFipe({ outVeiculoFipe, veiculoFipeuser }: EditFipeProps) {
 
 
   useEffect(() => {
-    setveiculoFipe(null);
+    if (veiculoFipeuser === null) {
     setmodelo({ codigo: '', label: '' });
     setAno({ codigo: '', label: '' });
     setmodelos([]);
     setrequest('');
+    }
     //marcas
 
     const params: AxiosRequestConfig = {
@@ -96,7 +100,7 @@ function EditFipe({ outVeiculoFipe, veiculoFipeuser }: EditFipeProps) {
     };
     //  if (tipoVeiculo.length > 0)
     {
-      requestExtern(params)
+      requestBackendNonCredentials(params)
         .then(
           (response) => {
             let marc: structure[] = [];
@@ -121,10 +125,12 @@ function EditFipe({ outVeiculoFipe, veiculoFipeuser }: EditFipeProps) {
   }, [marca]);
 
   useEffect(() => {
-    setveiculoFipe(null);
+   
+    if (veiculoFipeuser === null) {
     setAno({ codigo: '', label: '' });
     setAnos([]);
     setrequest('');
+    }
     //console.log       (`https://parallelum.com.br/fipe/api/v1/${tipoVeiculo}/marcas/${marca.codigo}/modelos/${modelo.codigo}/anos`);
     const params: AxiosRequestConfig = {
       method: 'GET',
@@ -135,7 +141,7 @@ function EditFipe({ outVeiculoFipe, veiculoFipeuser }: EditFipeProps) {
     // if (marcas.length > 0 && tipoVeiculo.length > 0) 
     {
 
-      requestExtern(params)
+      requestBackendNonCredentials(params)
         .then(
           (response) => {
 
@@ -165,7 +171,7 @@ function EditFipe({ outVeiculoFipe, veiculoFipeuser }: EditFipeProps) {
         url: `https://parallelum.com.br/fipe/api/v1/${tipoVeiculo}/marcas/${marca.codigo}/modelos/${modelo.codigo}/anos/${ano.codigo}`,
       };
 
-      requestExtern(params)
+      requestBackendNonCredentials(params)
         .then(
           (response) => {
             //setveiculoFipe(response.data);
@@ -181,7 +187,6 @@ function EditFipe({ outVeiculoFipe, veiculoFipeuser }: EditFipeProps) {
             fipe.modelo = response.data.Modelo;
             fipe.siglaCombustivel = response.data.SiglaCombustivel;
             fipe.tipoVeiculo = tipoVeiculo;
-            fipe.codigotipoVeiculo = response.data.TipoVeiculo;
             fipe.valor = response.data.Valor;
             console.log(fipe);
 
@@ -206,15 +211,18 @@ function EditFipe({ outVeiculoFipe, veiculoFipeuser }: EditFipeProps) {
             <CardHeader title='Identificação do Veículo' />
             <Autocomplete
               disablePortal
+              size='small'
               id="combo-box-demo"
-              options={TipVeiculo()} 
+              options={TipVeiculo()}
               onChange={(event: any, newValue: string | null) => {
                 setTipoVeiculo(newValue);
               }}
-              renderInput={(params) => <TextField {...params} defaultValue={tipoVeiculo} label="Tipo" />}
+              renderInput={(params) => <TextField {...params} defaultValue={tipoVeiculo} label="Tipo"
+                error={errors[tipoVeiculo]} />}
             />
             <Autocomplete sx={{ mt: 3 }}
               disablePortal
+              size='small'
               id="combo-box-demo"
               options={marcas}
               value={marca.label}
@@ -235,6 +243,7 @@ function EditFipe({ outVeiculoFipe, veiculoFipeuser }: EditFipeProps) {
             />
             <Autocomplete sx={{ mt: 3 }}
               disablePortal
+              size='small'
               id="combo-box-demo"
               options={modelos}
               value={modelo.label}
@@ -254,6 +263,7 @@ function EditFipe({ outVeiculoFipe, veiculoFipeuser }: EditFipeProps) {
               renderInput={(params) => <TextField   {...params} defaultValue={modelo.label} label="Modelo" />}
             /> <Autocomplete sx={{ mt: 3 }}
               disablePortal
+              size='small'
               id="combo-box-demo"
               options={anos}
               value={ano.label}

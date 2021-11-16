@@ -13,19 +13,22 @@ import {
   Typography
 } from '@material-ui/core';
 import { useState ,useContext, useEffect} from 'react';
-import { requestBackendLogin } from '../../util/requests';
-import { removeAuthData, saveAuthData } from '../../util/storage';
+import { requestBackendLogin } from '../../util/requests'; 
 import { getTokenData } from '../../util/auth';
 import { AuthContext } from '../../AuthContext'; 
+import { saveAuthData } from '../../util/storage';
 
-
+type CredentialsDTO = {
+  username: string;
+  password: string;
+};
 function Login() {
   const { setAuthContextData } = useContext(AuthContext);
   const navigate = useNavigate();
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    removeAuthData();   
+    //removeAuthData();   
   }, [])
 
   return (
@@ -47,26 +50,28 @@ function Login() {
 
           <Formik
             initialValues={{
-              email: '',
+              username: '',
               password: ''
             }}
             validationSchema={Yup.object().shape({
-              email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+              username: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
               password: Yup.string().max(255).required('Password is required')
             })}
-            onSubmit={(values) => {
+            onSubmit={(values:CredentialsDTO) => {
               console.log(values);
               
               requestBackendLogin(values)
               .then(
                 (response) => {
+                  console.log(response.data);
+                  navigate('/app', { replace: true });
                 saveAuthData(response.data);
                 setHasError(false);
                 setAuthContextData({
                   authenticated: true,
                   tokenData: getTokenData(),
                 })
-                navigate('/app', { replace: true });
+              
               })
               .catch((error) => {
                 setHasError(true);
@@ -132,16 +137,16 @@ function Login() {
 
                 </Box>
                 <TextField
-                  error={Boolean(touched.email && errors.email)}
+                  error={Boolean(touched.username && errors.username)}
                   fullWidth
-                  helperText={touched.email && errors.email}
+                  helperText={touched.username && errors.username}
                   label="Email Address"
                   margin="normal"
-                  name="email"
+                  name="username"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   type="email"
-                  value={values.email}
+                  value={values.username}
                   variant="outlined"
                 />
                 <TextField

@@ -1,5 +1,7 @@
 
 import './App.css';
+
+import "antd/dist/antd.css"; 
 import { useNavigate, useRoutes } from 'react-router-dom';
 import Account from './components/Account';
 import DashboardLayout from './components/DashboardLayout';
@@ -7,82 +9,107 @@ import Login from './pages/Login';
 import ListUser from './pages/Users/ListUser';
 import { useState } from 'react';
 import { AxiosRequestConfig } from 'axios';
-import { getAuthData, removeAuthData, saveAuthData } from './util/storage';
+import { getAuthData,  saveAuthData } from './util/storage';
 import { requestBackend } from './util/requests';
-import { getTokenData, isAuthenticated } from './util/auth';
-import ListVeiculos from './pages/Veiculo/ListVeiculos';
-import EditVeiculo from './pages/Veiculo/EditVeiculo';
+import { getTokenData, isAuthenticated } from './util/auth';  
 import StapVeiculo from './pages/Veiculo/StapVeiculo';
 import EditFipe from './pages/Veiculo/EditFipe';
+import Setor from './pages/Setor';
+import FormSetor from './pages/Setor';
+import DashboardNavbar from './components/layout/DashboardNavbar';
+import DashboardSidebar from './components/layout/DashboardSidebar';
+import NewVeiculo from './pages/Veiculo/NewVeiculo';
+import ListVeiculos from './pages/Veiculo/ListVeiculos';
 
 function App() {
   var time: any;
   const navigate = useNavigate();
- /* const sinespApi = require('sinesp-api');
-  let vehicle = sinespApi.search('PGG1537');
-  console.log(vehicle);
-*/
-
-  const onFilter = () => {
-    var token = getAuthData().token;
+  /**
+   * 
+   * @description Reflash token
+   */
+/*  const onFilter = () => {
+    var token = getAuthData().access_token;
     const params: AxiosRequestConfig = {
 
       method: 'POST',
-      url: `/api/refresh/${token}`,
+      url: `/api/refresh_token`,
 
     };
-    requestBackend(params).then(
-      (response) => {
-        removeAuthData();
-        saveAuthData(response.data);
+     
+    {
+      requestBackend(params).then(
+        (response) => {
+          removeAuthData();
+          saveAuthData(response.data);
 
-      }
+        }
 
-    ).catch(
-      (error) => {
-        console.log(error);
+      ).catch(
+        (error) => {
+          console.log(error);
+//removeAuth();
+        }
+      );
 
-      }
-    );
+
+    }
   }
-  const removeAuth = () => {
-    removeAuthData();
-    navigate('/auth/login', { replace: true });
-  }
+  /**
+   * @description atualização do token automaticamente
+  
   time = setInterval(() => {
     try {
-     
+
       if (isAuthenticated()) {
         onFilter();
       } else {
-        removeAuth();
+       // removeAuth();
         //     clearInterval(time);
       }
     } catch (error) {
-      removeAuth();
+     // removeAuth();
       //  clearInterval(time);
     }
   }, 19980);
 
+ 
+  /**
+   * @description remove token
+ 
+  const removeAuth = () => {
+    removeAuthData();
+    navigate('/auth/login', { replace: true });
+  }
+*/
+  //routes
+
+  /**
+   * @description rota principal
+   */
+   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
   const root = {
     path: '/',
-    element: <DashboardLayout />,
+    element:<DashboardSidebar
+    onMobileClose={() => setMobileNavOpen(false)}
+    openMobile={isMobileNavOpen}
+  />,
     children: [
 
       { path: 'account', element: <Account /> },
 
     ],
   };
-  const mainRoutes = {
 
+  const mainRoutes = {
     path: '/app',
     element: <DashboardLayout />,
     children: [
       { path: 'usuarios', element: <ListUser /> },
       { path: 'account', element: <Account /> },
-      { path: 'veiculos', element: <ListVeiculos /> },
-      { path: 'newveiculo', element: <StapVeiculo  /> },
-      { path: 'veiculos/:id', element: <EditVeiculo /> },
+      { path: 'veiculos', element: <ListVeiculos /> }, 
+      { path: 'veiculos/:id', element: <NewVeiculo /> },
+      { path: 'setores', element: <FormSetor /> },
 
 
     ],
@@ -99,4 +126,4 @@ function App() {
 }
 
 export default App;
- 
+

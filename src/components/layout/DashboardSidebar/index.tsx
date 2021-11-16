@@ -17,7 +17,7 @@ import {
   Truck as TruckIcon,
   Lock as LockIcon,
   Settings as SettingsIcon,
-  ShoppingBag as ShoppingBagIcon,
+  Trello as ShoppingBagIcon,
   User as UserIcon,
   UserPlus as UserPlusIcon,
   Users as UsersIcon
@@ -48,9 +48,9 @@ const items = [
     title: 'Veículos'
   },
   {
-    href: '/app/products',
+    href: '/app/setores',
     icon: ShoppingBagIcon,
-    title: 'Products'
+    title: 'Setores'
   },
   {
     href: '/app/account',
@@ -83,6 +83,8 @@ function DashboardSidebar({ onMobileClose, openMobile }: DashboardSidebarProps) 
   const navigate = useNavigate();
   const [usuario, setusuario] = useState({});
   useEffect(() => {
+    console.log(getAuthData().access_token);
+    
     //verifica a existência e validade do token e redireciona para login
     if (!isAuthenticated()) {
       navigate('/auth/login', { replace: true });

@@ -12,8 +12,7 @@ import {
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
-import InputIcon from '@material-ui/icons/Input';
-import { removeAuthData } from '../../../util/storage';
+import InputIcon from '@material-ui/icons/Input'; 
  
 interface DashboardNavbarProps {
   onMobileNavOpen:()=>void;
@@ -23,7 +22,7 @@ function DashboardNavbar({ onMobileNavOpen }: DashboardNavbarProps) {
   const navigate = useNavigate();
   const [notifications,setnotifications] = useState([]);
   const removeAuth=()=>{
-    removeAuthData();
+   // removeAuthData();
     navigate('/auth/login', { replace: true });
   }
   return (
