@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import moment from "moment";
 
 export const formatPrice = (price: number) => {
@@ -13,3 +14,11 @@ export const samplFormatDate = (data: Date) => {
     const paramsdata = { year: "numeric",    month: "long",    day: "2-digit"};
     return moment(data).format('DD/MM/YYYY');// new Intl.DateTimeFormat('pt-BR').format(data);
 }
+
+export const openNotificationWithIcon = (type,title,msg) => {
+    notification[type]({
+      message: title,
+      description:msg,
+    });
+  };
+  

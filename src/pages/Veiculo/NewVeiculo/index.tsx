@@ -4,9 +4,6 @@ import {
   CardContent, Grid, CardHeader, FormControl
 } from '@material-ui/core';
 
-
-import TextField from '@mui/material/TextField';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { AxiosRequestConfig } from 'axios';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -18,9 +15,8 @@ import { VeiculoFipe } from '../../../types/VeiculoFipe';
 import { requestBackend } from '../../../util/requests';
 import EditFipe from '../EditFipe';
 import StatusVeiculo from '../StatusVeiculo';
-import FielTextHook from '../../../components/FielTextHook';
-import { DesktopDatePicker, LocalizationProvider } from '@mui/lab';
 import RegistroVeiculo from '../RegistroVeiculo';
+import { openNotificationWithIcon } from '../../../util/formatters';
 interface NewVeiculoProps {
   children?: ReactNode;
 }
@@ -97,12 +93,14 @@ function NewVeiculo({ }: NewVeiculoProps) {
       param.id = response.data;
       setveiculo({...veiculo,id:response.data});
         navigate(`/app/veiculos/${response.data}`, { replace: true });
-
+        openNotificationWithIcon('success',"Sucesso",'Dados Salvo com sucesso');
       }
 
     ).catch(
       (error) => {
         console.log(error);
+
+        openNotificationWithIcon('errors',"Erro",error.message);
 
       }
     );
