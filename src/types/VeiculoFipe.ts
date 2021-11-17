@@ -15,6 +15,10 @@ export type VeiculoFipe =
         codigomarca?:string;
 
     }
+    export type structure = {
+        label: string;
+        codigo: any
+      }
     export const clearVeiculoFip=()=>{
         let fipe:VeiculoFipe;
         fipe.anoModelo='';//AnoModelo;

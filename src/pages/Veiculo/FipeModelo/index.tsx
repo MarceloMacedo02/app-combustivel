@@ -2,22 +2,25 @@ import { Autocomplete, Card, CardContent, CardHeader, Container, FormLabel, Grid
 import { Select, Radio } from 'antd';
 import { AxiosRequestConfig } from 'axios';
 import { ReactNode, useEffect, useState } from 'react';
-import { clearVeiculoFip, VeiculoFipe } from '../../../types/VeiculoFipe';
-import { requestBackendNonCredentials } from '../../../util/requests';
-import { structure } from '../EditFipe';
+import { clearVeiculoFip, structure, VeiculoFipe } from '../../../types/VeiculoFipe';
+import { requestBackendNonCredentials } from '../../../util/requests'; 
 import FipeAno from '../FipeAno';
 const { Option } = Select;
 interface FipeModeloProps {
   marca: structure;
   tipoVeiculo;
+  model,
+  setmodel,
+  setmodelos,
+  modelos,
   veiculoFipeuser: VeiculoFipe;
   outMarca?: (structure) => void;
-  outVeiculoFipe: (veiculoFipe: VeiculoFipe) => void;
+  outVeiculoFipe?: (veiculoFipe: VeiculoFipe) => void;
 }
 
-function FipeModelo({ marca, veiculoFipeuser, tipoVeiculo, outVeiculoFipe }: FipeModeloProps) {
-  const [model, setmodel] = useState({ label: '', codigo: '' })
-  const [modelos, setmodelos] = useState<structure[]>([]);
+function FipeModelo({ marca, veiculoFipeuser, tipoVeiculo, model,
+    setmodel,  setmodelos,  modelos,outVeiculoFipe }: FipeModeloProps) {
+
   const [label, setlabel] = useState('')
 
   const _outVeiculoFipe = (_veiculoFipe: VeiculoFipe) => {
@@ -98,8 +101,9 @@ function FipeModelo({ marca, veiculoFipeuser, tipoVeiculo, outVeiculoFipe }: Fip
         </Select>
       </div>
 
-      <FipeAno marca={marca} tipoVeiculo={tipoVeiculo} veiculoFipeuser={veiculoFipeuser} modelo={model}   outVeiculoFipe={_outVeiculoFipe}/>
-    </>
+   {/*}   <FipeAno marca={marca} tipoVeiculo={tipoVeiculo} veiculoFipeuser={veiculoFipeuser} modelo={model}   outVeiculoFipe={_outVeiculoFipe}/>
+   */}
+   </>
   );
 }
 

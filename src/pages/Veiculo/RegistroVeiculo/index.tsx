@@ -1,13 +1,7 @@
 
-import { Box, Card, CardContent, CardHeader, Container, FormControl, FormLabel, Grid } from '@material-ui/core';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import { Box, Card, CardContent,   Grid } from '@material-ui/core'; 
 import FielTextHook from "../../../components/FielTextHook";
-import { Veiculo } from '../../../types/Veiculo';
-import TextField from '@mui/material/TextField';
-import { DesktopDatePicker } from '@mui/lab';
-import { DatePicker, Space } from 'antd';
+import { Veiculo } from '../../../types/Veiculo'; 
 import moment from 'moment';
 
 interface RegistroVeiculoProps {
@@ -24,8 +18,7 @@ function RegistroVeiculo({ register, errors, setValue, veiculo, setveiculo, getV
 
   const dateFormat = 'DD/MM/YYYY';
   return (
-    <>
-      <Container maxWidth="lg">
+    <> 
         <Box sx={{ mt: 3 }}>
           <Card>
             <CardContent>
@@ -70,8 +63,7 @@ function RegistroVeiculo({ register, errors, setValue, veiculo, setveiculo, getV
               </Grid>
             </CardContent>
           </Card>
-        </Box>
-      </Container>
+        </Box> 
     </>
   );
 }

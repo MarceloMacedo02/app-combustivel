@@ -5,7 +5,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import FielTextDisabled from '../../../components/FielTextDisabled';
 import SelectComponent from '../../../components/SelectComponent';
 import { Anos, Marcas, Modelos, newElementoFipe, TipVeiculo } from '../../../types/Fipe';
-import { clearVeiculoFip, VeiculoFipe } from '../../../types/VeiculoFipe';
+import { clearVeiculoFip, structure, VeiculoFipe } from '../../../types/VeiculoFipe';
 import { requestBackendNonCredentials } from '../../../util/requests';
 import FipeMarca from '../FipeMarca';
 
@@ -15,10 +15,7 @@ interface EditFipeProps {
   veiculoFipeuser: VeiculoFipe;
   register, errors, setValue, veiculo, setveiculo, getValues
 }
-export type structure = {
-  label: string;
-  codigo: any
-}
+
 type ModelosEstructure = {
   modelos: Modelos[];
 }
@@ -109,9 +106,9 @@ function EditFipe({ outVeiculoFipe, veiculoFipeuser, register, errors, setValue,
               </Select>
             </div>
 
-            <FipeMarca tipoVeiculo={tipoVeiculo} veiculoFipeuser={veiculoFipeuser} _marca={marca ? marca : null}
+           {/*<FipeMarca tipoVeiculo={tipoVeiculo} veiculoFipeuser={veiculoFipeuser} _marca={marca ? marca : null}
             outVeiculoFipe={_outVeiculoFipe} />
- 
+              */}
             <br/>
             Combustível:{veiculoFipeuser && veiculoFipeuser.combustivel}   
           </CardContent>

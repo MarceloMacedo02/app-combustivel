@@ -2,21 +2,20 @@ import { Autocomplete, Card, CardContent, CardHeader, Container, FormLabel, Grid
 import { Select, Radio } from 'antd';
 import { AxiosRequestConfig } from 'axios';
 import { ReactNode, useEffect, useState } from 'react';
-import { clearVeiculoFip, VeiculoFipe } from '../../../types/VeiculoFipe';
-import { requestBackendNonCredentials } from '../../../util/requests';
-import { structure } from '../EditFipe';
+import { clearVeiculoFip, structure, VeiculoFipe } from '../../../types/VeiculoFipe';
+import { requestBackendNonCredentials } from '../../../util/requests'; 
 const { Option } = Select;
 interface FipeAnoProps {
-  marca:structure;
-  tipoVeiculo;
-  modelo:structure;
-  veiculoFipeuser: VeiculoFipe; 
-  outVeiculoFipe?: (veiculoFipe: VeiculoFipe) => void;
+  marca:structure,
+  ano,anos,setano,setanos ,
+  tipoVeiculo,
+  modelo,
+  veiculoFipeuser: VeiculoFipe, 
+  outVeiculoFipe: (veiculoFipe: VeiculoFipe) => void;
 }
 
-function FipeAno({  marca, veiculoFipeuser, tipoVeiculo ,modelo ,outVeiculoFipe}: FipeAnoProps) {
-  const [ano, setano] = useState({ label: '', codigo: '' })
-  const [anos, setanos] = useState<structure[]>([]);
+function FipeAno({  marca, veiculoFipeuser, tipoVeiculo ,modelo,ano,anos,setano,setanos ,outVeiculoFipe}: FipeAnoProps) {
+
   const [label, setlabel] = useState('')
 
   useEffect(() => {

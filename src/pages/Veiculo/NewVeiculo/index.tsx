@@ -8,28 +8,35 @@ import { AxiosRequestConfig } from 'axios';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router';
-import { Marcas } from '../../../types/Fipe';
 import { Veiculo, veiculoBlank } from '../../../types/Veiculo';
 import { VeiculoDTO } from '../../../types/VeiculoDTO';
-import { VeiculoFipe } from '../../../types/VeiculoFipe';
+import { structure, VeiculoFipe } from '../../../types/VeiculoFipe';
 import { requestBackend } from '../../../util/requests';
-import EditFipe from '../EditFipe';
-import StatusVeiculo from '../StatusVeiculo';
-import RegistroVeiculo from '../RegistroVeiculo';
 import { openNotificationWithIcon } from '../../../util/formatters';
+import RegistroVeiculo from '../RegistroVeiculo';
+import FipeTipoVeiculo from '../FipeTipoVeiculo';
+import FipeMarca from '../FipeMarca';
+import FipeModelo from '../FipeModelo';
+import FipeAno from '../FipeAno';
+import StatusVeiculo from '../StatusVeiculo';
 interface NewVeiculoProps {
   children?: ReactNode;
 }
 
 function NewVeiculo({ }: NewVeiculoProps) {
 
-  const [getRequest, setGetRequest] = useState('');
-  const [marcas, setMarcas] = useState<Marcas[]>([]);
-  const [veiculoFipe, setveiculoFipe] = useState<VeiculoDTO>({});
+  const [getRequest, setGetRequest] = useState(''); 
   const [veiculo, setveiculo] = useState<Veiculo>(veiculoBlank());
   const [param, setparam] = useState<any>(useParams())
   const getRequestMarcas = 'https://parallelum.com.br/fipe/api/v1/carros/marcas';
 
+  const [tipoVeiculo, settipoVeiculo] = useState('')
+  const [marca, setmarca] = useState<structure>({ label: '', codigo: '' });
+  const [marcas, setmarcas] = useState<structure[]>([]);
+  const [model, setmodel] = useState({ label: '', codigo: '' })
+  const [modelos, setmodelos] = useState<structure[]>([]);
+  const [ano, setano] = useState({ label: '', codigo: '' })
+  const [anos, setanos] = useState<structure[]>([]);
   const { register, handleSubmit, formState: { errors, isValid, isDirty }, setValue, getValues, } = useForm();
 
   const params: AxiosRequestConfig = {
@@ -37,7 +44,7 @@ function NewVeiculo({ }: NewVeiculoProps) {
     url: getRequest,
   };
   useEffect(() => {
-    
+
 
     if (param.id !== 'add') {
       const params: AxiosRequestConfig = {
@@ -89,18 +96,18 @@ function NewVeiculo({ }: NewVeiculoProps) {
     };
     requestBackend(params).then(
       (response) => {
-      //  setveiculo(response.data);
-      param.id = response.data;
-      setveiculo({...veiculo,id:response.data});
+        //  setveiculo(response.data);
+        param.id = response.data;
+        setveiculo({ ...veiculo, id: response.data });
         navigate(`/app/veiculos/${response.data}`, { replace: true });
-        openNotificationWithIcon('success',"Sucesso",'Dados Salvo com sucesso');
+        openNotificationWithIcon('success', "Sucesso", 'Dados Salvo com sucesso');
       }
 
     ).catch(
       (error) => {
         console.log(error);
 
-        openNotificationWithIcon('errors',"Erro",error.message);
+        openNotificationWithIcon('errors', "Erro", error);
 
       }
     );
@@ -108,7 +115,7 @@ function NewVeiculo({ }: NewVeiculoProps) {
 
 
   const setveiculoFipeIn = (_veiculoFipe: VeiculoFipe) => {
-console.log(_veiculoFipe);
+    console.log(_veiculoFipe);
 
     setValue('veiculoFipe', _veiculoFipe)
     setveiculo({ ...veiculo, veiculoFipe: _veiculoFipe });
@@ -118,36 +125,65 @@ console.log(_veiculoFipe);
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Paper>
-          <Box sx={{ mt: 3 }}>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'flex-end'
-              }}
-            >
+          <Card>
+            <CardContent>
+              <Box sx={{ mt: 3 }}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'flex-end'
+                  }}
+                >
 
-              {(veiculo.veiculoFipe && veiculo.veiculoFipe.codigoFipe.length > 0) && <Button type='submit'
-                color="primary"
-                variant="contained"
+                  {(veiculo.veiculoFipe && veiculo.veiculoFipe.codigoFipe.length > 0) && <Button type='submit'
+                    color="primary"
+                    variant="contained"
 
-              >
-                Salvar
-              </Button>
-              }
-            </Box>
+                  >
+                    Salvar
+                  </Button>
+                  }
+                </Box>
 
-          </Box>
+              </Box>
 
-          <Container>
- 
-            <EditFipe veiculoFipeuser={veiculo.veiculoFipe ? veiculo.veiculoFipe : null} getValues={getValues} 
-              outVeiculoFipe={setveiculoFipeIn} register={register} errors={errors} setValue={setValue} veiculo={veiculo}
-              setveiculo={setveiculo} />
-            <RegistroVeiculo setveiculo={setveiculo} getValues={getValues}
-              setValue={setValue} errors={errors} veiculo={veiculo} register={register} />
-            <StatusVeiculo setveiculo={setveiculo}
-              setValue={setValue} errors={errors} veiculo={veiculo} register={register} getValues={getValues} />
-          </Container>
+              <Container>     
+                <Card>
+                <CardContent>
+                  <Grid container spacing={4}>
+                    <Grid item lg={3}>
+
+                      <FipeTipoVeiculo settipoVeiculo={settipoVeiculo} veiculoFipeuser={veiculo.veiculoFipe ? veiculo.veiculoFipe : null}
+                        tipoVeiculo={tipoVeiculo} setmarcas={setmarcas} />
+
+                    </Grid>
+                    <Grid item lg={3}>
+                      <FipeMarca tipoVeiculo={tipoVeiculo} veiculoFipeuser={veiculo.veiculoFipe ? veiculo.veiculoFipe : null}
+                        setmarca={setmarca} setmarcas={setmarcas} marca={marca} marcas={marcas} />
+
+                    </Grid>
+                    <Grid item lg={3}>
+                      <FipeModelo tipoVeiculo={tipoVeiculo} veiculoFipeuser={veiculo.veiculoFipe ? veiculo.veiculoFipe : null}
+                        marca={marca} model={model} setmodel={setmodel} setmodelos={setmodelos} modelos={modelos} />
+
+                    </Grid>
+                    <Grid item lg={3}>
+                      <FipeAno tipoVeiculo={tipoVeiculo} veiculoFipeuser={veiculo.veiculoFipe ? veiculo.veiculoFipe : null}
+                        marca={marca} ano={ano} anos={anos} setano={setano} setanos={setanos} modelo={model} outVeiculoFipe={setveiculoFipeIn} />
+                    </Grid>
+                  </Grid>
+                  Combustível:{veiculo.veiculoFipe && veiculo.veiculoFipe.combustivel}   
+                <br />
+                <RegistroVeiculo setveiculo={setveiculo} getValues={getValues}
+                  setValue={setValue} errors={errors} veiculo={veiculo} register={register} />
+                <StatusVeiculo setveiculo={setveiculo}
+                  setValue={setValue} errors={errors} veiculo={veiculo} register={register} getValues={getValues} />
+
+                </CardContent>
+              </Card>
+              </Container>
+            </CardContent>
+          </Card>
         </Paper>
       </form>
 

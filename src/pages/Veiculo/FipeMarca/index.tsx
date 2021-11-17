@@ -2,23 +2,24 @@ import { Autocomplete, Card, CardContent, CardHeader, Container, FormLabel, Grid
 import { Select, Radio } from 'antd';
 import { AxiosRequestConfig } from 'axios';
 import { ReactNode, useEffect, useState } from 'react';
-import { clearVeiculoFip, VeiculoFipe } from '../../../types/VeiculoFipe';
+import { clearVeiculoFip, structure, VeiculoFipe } from '../../../types/VeiculoFipe';
 import { requestBackendNonCredentials } from '../../../util/requests';
-import { structure } from '../EditFipe';
 import FipeModelo from '../FipeModelo';
 const { Option } = Select;
 
 interface FipoMarcaProps {
   tipoVeiculo;
-  _marca?: structure;
-  veiculoFipeuser: VeiculoFipe; 
-  outVeiculoFipe: (veiculoFipe: VeiculoFipe) => void;
+  setmarca,
+  setmarcas,
+  marca,
+  marcas,
+  veiculoFipeuser: VeiculoFipe;
+  outVeiculoFipe?: (veiculoFipe: VeiculoFipe) => void;
 }
 
-function FipeMarca({ tipoVeiculo, _marca,  veiculoFipeuser, outVeiculoFipe }: FipoMarcaProps) {
-  const [marca, setmarca] = useState(_marca);
-  const [marcas, setmarcas] = useState<structure[]>([]);
- 
+function FipeMarca({ tipoVeiculo, setmarca, setmarcas, marca,marcas, veiculoFipeuser, outVeiculoFipe }: FipoMarcaProps) {
+
+
   const _outVeiculoFipe = (_veiculoFipe: VeiculoFipe) => {
     outVeiculoFipe(_veiculoFipe)
   }
@@ -59,7 +60,7 @@ function FipeMarca({ tipoVeiculo, _marca,  veiculoFipeuser, outVeiculoFipe }: Fi
       <div className=" form-group">
         <label className="form-label mt-2"> Marca Veículo</label>
         <br />
-        <Select size={'middle'} value={marca.label} style={{ 'minWidth': 250 }}  
+        <Select size={'middle'} value={marca.label} style={{ 'minWidth': 250 }}
           className={` form-control-select base-input  `}
           onChange={(e) => {
             //console.log(e);
@@ -67,15 +68,15 @@ function FipeMarca({ tipoVeiculo, _marca,  veiculoFipeuser, outVeiculoFipe }: Fi
               if (element.codigo == e) { setmarca(element) }
             });
 
-          }} placeholder='Marca Veículo'  
-          >
+          }} placeholder='Marca Veículo'
+        >
           {marcas.map(x => <Option key={x.codigo} value={x.codigo}> {x.label} </Option>)}
         </Select>
       </div>
 
-      <FipeModelo  outVeiculoFipe={_outVeiculoFipe} marca={marca} tipoVeiculo={tipoVeiculo} veiculoFipeuser={veiculoFipeuser}
-       />
-      
+      {/* <FipeModelo  outVeiculoFipe={_outVeiculoFipe} marca={marca} tipoVeiculo={tipoVeiculo} veiculoFipeuser={veiculoFipeuser}
+      />/*/}
+
     </>
   );
 }
