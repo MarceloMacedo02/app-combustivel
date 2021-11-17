@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/app/static/css/main.c941d89c.chunk.css",
-    "main.js": "/app/static/js/main.bcfb434c.chunk.js",
-    "main.js.map": "/app/static/js/main.bcfb434c.chunk.js.map",
-    "runtime-main.js": "/app/static/js/runtime-main.0f88f826.js",
-    "runtime-main.js.map": "/app/static/js/runtime-main.0f88f826.js.map",
-    "static/css/2.a95be28f.chunk.css": "/app/static/css/2.a95be28f.chunk.css",
-    "static/js/2.a33c4bd2.chunk.js": "/app/static/js/2.a33c4bd2.chunk.js",
-    "static/js/2.a33c4bd2.chunk.js.map": "/app/static/js/2.a33c4bd2.chunk.js.map",
-    "static/js/3.f996d910.chunk.js": "/app/static/js/3.f996d910.chunk.js",
-    "static/js/3.f996d910.chunk.js.map": "/app/static/js/3.f996d910.chunk.js.map",
-    "index.html": "/app/index.html",
-    "static/css/2.a95be28f.chunk.css.map": "/app/static/css/2.a95be28f.chunk.css.map",
-    "static/css/main.c941d89c.chunk.css.map": "/app/static/css/main.c941d89c.chunk.css.map",
-    "static/js/2.a33c4bd2.chunk.js.LICENSE.txt": "/app/static/js/2.a33c4bd2.chunk.js.LICENSE.txt",
-    "static/media/arrow.fb773772.svg": "/app/static/media/arrow.fb773772.svg"
+    "main.css": "/app-combustivel-react/static/css/main.c941d89c.chunk.css",
+    "main.js": "/app-combustivel-react/static/js/main.924bd977.chunk.js",
+    "main.js.map": "/app-combustivel-react/static/js/main.924bd977.chunk.js.map",
+    "runtime-main.js": "/app-combustivel-react/static/js/runtime-main.4aad7854.js",
+    "runtime-main.js.map": "/app-combustivel-react/static/js/runtime-main.4aad7854.js.map",
+    "static/css/2.a95be28f.chunk.css": "/app-combustivel-react/static/css/2.a95be28f.chunk.css",
+    "static/js/2.30378a01.chunk.js": "/app-combustivel-react/static/js/2.30378a01.chunk.js",
+    "static/js/2.30378a01.chunk.js.map": "/app-combustivel-react/static/js/2.30378a01.chunk.js.map",
+    "static/js/3.f996d910.chunk.js": "/app-combustivel-react/static/js/3.f996d910.chunk.js",
+    "static/js/3.f996d910.chunk.js.map": "/app-combustivel-react/static/js/3.f996d910.chunk.js.map",
+    "index.html": "/app-combustivel-react/index.html",
+    "static/css/2.a95be28f.chunk.css.map": "/app-combustivel-react/static/css/2.a95be28f.chunk.css.map",
+    "static/css/main.c941d89c.chunk.css.map": "/app-combustivel-react/static/css/main.c941d89c.chunk.css.map",
+    "static/js/2.30378a01.chunk.js.LICENSE.txt": "/app-combustivel-react/static/js/2.30378a01.chunk.js.LICENSE.txt",
+    "static/media/arrow.fb773772.svg": "/app-combustivel-react/static/media/arrow.fb773772.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.0f88f826.js",
+    "static/js/runtime-main.4aad7854.js",
     "static/css/2.a95be28f.chunk.css",
-    "static/js/2.a33c4bd2.chunk.js",
+    "static/js/2.30378a01.chunk.js",
     "static/css/main.c941d89c.chunk.css",
-    "static/js/main.bcfb434c.chunk.js"
+    "static/js/main.924bd977.chunk.js"
   ]
 }
