@@ -22,7 +22,6 @@ function DashboardNavbar({ onMobileNavOpen }: DashboardNavbarProps) {
   const navigate = useNavigate();
   const [notifications,setnotifications] = useState([]);
   const removeAuth=()=>{
-   // removeAuthData();
     navigate('/auth/login', { replace: true });
   }
   return (
