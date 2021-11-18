@@ -4,7 +4,7 @@ import {
   CardContent, Grid, CardHeader, FormControl
 } from '@material-ui/core';
 
-import { AxiosRequestConfig } from 'axios';
+import { AxiosError, AxiosRequestConfig } from 'axios';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router';
@@ -25,7 +25,7 @@ interface NewVeiculoProps {
 
 function NewVeiculo({ }: NewVeiculoProps) {
 
-  const [getRequest, setGetRequest] = useState(''); 
+  const [getRequest, setGetRequest] = useState('');
   const [veiculo, setveiculo] = useState<Veiculo>(veiculoBlank());
   const [param, setparam] = useState<any>(useParams())
   const getRequestMarcas = 'https://parallelum.com.br/fipe/api/v1/carros/marcas';
@@ -105,10 +105,12 @@ function NewVeiculo({ }: NewVeiculoProps) {
 
     ).catch(
       (error) => {
-        console.log(error);
+         
+        try {
+          openNotificationWithIcon('error', "Erro", error.response.data.message);
+        } catch (error) {
 
-        openNotificationWithIcon('errors', "Erro", error);
-
+        }
       }
     );
   }
@@ -147,40 +149,40 @@ function NewVeiculo({ }: NewVeiculoProps) {
 
               </Box>
 
-              <Container>     
+              <Container>
                 <Card>
-                <CardContent>
-                  <Grid container spacing={4}>
-                    <Grid item lg={3}>
+                  <CardContent>
+                    <Grid container spacing={4}>
+                      <Grid item lg={3}>
 
-                      <FipeTipoVeiculo settipoVeiculo={settipoVeiculo} veiculoFipeuser={veiculo.veiculoFipe ? veiculo.veiculoFipe : null}
-                        tipoVeiculo={tipoVeiculo} setmarcas={setmarcas} />
+                        <FipeTipoVeiculo settipoVeiculo={settipoVeiculo} veiculoFipeuser={veiculo.veiculoFipe ? veiculo.veiculoFipe : null}
+                          tipoVeiculo={tipoVeiculo} setmarcas={setmarcas} />
 
+                      </Grid>
+                      <Grid item lg={3}>
+                        <FipeMarca tipoVeiculo={tipoVeiculo} veiculoFipeuser={veiculo.veiculoFipe ? veiculo.veiculoFipe : null}
+                          setmarca={setmarca} setmarcas={setmarcas} marca={marca} marcas={marcas} />
+
+                      </Grid>
+                      <Grid item lg={3}>
+                        <FipeModelo tipoVeiculo={tipoVeiculo} veiculoFipeuser={veiculo.veiculoFipe ? veiculo.veiculoFipe : null}
+                          marca={marca} model={model} setmodel={setmodel} setmodelos={setmodelos} modelos={modelos} />
+
+                      </Grid>
+                      <Grid item lg={3}>
+                        <FipeAno tipoVeiculo={tipoVeiculo} veiculoFipeuser={veiculo.veiculoFipe ? veiculo.veiculoFipe : null}
+                          marca={marca} ano={ano} anos={anos} setano={setano} setanos={setanos} modelo={model} outVeiculoFipe={setveiculoFipeIn} />
+                      </Grid>
                     </Grid>
-                    <Grid item lg={3}>
-                      <FipeMarca tipoVeiculo={tipoVeiculo} veiculoFipeuser={veiculo.veiculoFipe ? veiculo.veiculoFipe : null}
-                        setmarca={setmarca} setmarcas={setmarcas} marca={marca} marcas={marcas} />
+                    Combustível:{veiculo.veiculoFipe && veiculo.veiculoFipe.combustivel}
+                    <br />
+                    <RegistroVeiculo setveiculo={setveiculo} getValues={getValues}
+                      setValue={setValue} errors={errors} veiculo={veiculo} register={register} />
+                    <StatusVeiculo setveiculo={setveiculo}
+                      setValue={setValue} errors={errors} veiculo={veiculo} register={register} getValues={getValues} />
 
-                    </Grid>
-                    <Grid item lg={3}>
-                      <FipeModelo tipoVeiculo={tipoVeiculo} veiculoFipeuser={veiculo.veiculoFipe ? veiculo.veiculoFipe : null}
-                        marca={marca} model={model} setmodel={setmodel} setmodelos={setmodelos} modelos={modelos} />
-
-                    </Grid>
-                    <Grid item lg={3}>
-                      <FipeAno tipoVeiculo={tipoVeiculo} veiculoFipeuser={veiculo.veiculoFipe ? veiculo.veiculoFipe : null}
-                        marca={marca} ano={ano} anos={anos} setano={setano} setanos={setanos} modelo={model} outVeiculoFipe={setveiculoFipeIn} />
-                    </Grid>
-                  </Grid>
-                  Combustível:{veiculo.veiculoFipe && veiculo.veiculoFipe.combustivel}   
-                <br />
-                <RegistroVeiculo setveiculo={setveiculo} getValues={getValues}
-                  setValue={setValue} errors={errors} veiculo={veiculo} register={register} />
-                <StatusVeiculo setveiculo={setveiculo}
-                  setValue={setValue} errors={errors} veiculo={veiculo} register={register} getValues={getValues} />
-
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
               </Container>
             </CardContent>
           </Card>

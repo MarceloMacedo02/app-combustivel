@@ -110,7 +110,7 @@ function EditFipe({ outVeiculoFipe, veiculoFipeuser, register, errors, setValue,
             outVeiculoFipe={_outVeiculoFipe} />
               */}
             <br/>
-            Combustível:{veiculoFipeuser && veiculoFipeuser.combustivel}   
+          
           </CardContent>
 
         </Card>
